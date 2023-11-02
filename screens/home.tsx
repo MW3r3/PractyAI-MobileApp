@@ -2,6 +2,7 @@ import React from "react";
 import { SafeAreaView, View, Text, StyleSheet, Appearance } from "react-native";
 import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme } from "../themes";
+import Topbar from "../components/topbar";
 
 export default function HomeScreen() {
   const colorScheme = Appearance.getColorScheme();
@@ -10,8 +11,6 @@ export default function HomeScreen() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
       backgroundColor: theme.background,
     },
     title: {
@@ -19,12 +18,18 @@ export default function HomeScreen() {
       fontWeight: "bold",
       color: theme.text,
     },
+    content: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        },
   });
 
   return (
     <ThemeProvider theme={theme}>
       <SafeAreaView style={styles.container}>
-        <View>
+        <Topbar title="PractyAI" theme={colorScheme} />
+        <View style={styles.content}>
           <Text style={styles.title}>Home Screen</Text>
         </View>
       </SafeAreaView>

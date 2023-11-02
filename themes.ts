@@ -10,6 +10,7 @@ export const lightTheme = {
   sucess: '#00ff00',
   warn: '#ffff00',
   text: '#161618',
+  item: '#161618',
 };
 
 export const darkTheme = {
@@ -24,4 +25,5 @@ export const darkTheme = {
   sucess: '#00ff00',
   warn: '#ffff00',
   text: '#ffffff',
+  item: '#ffffff',
 };
