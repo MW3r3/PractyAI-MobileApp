@@ -1,21 +1,33 @@
 import React from "react";
-import { View, Text, Dimensions, Image } from "react-native";
-import Carousel from "react-native-snap-carousel";
+import { View, Text, Image } from "react-native";
+import Swiper from "react-native-swiper";
 import { placeholderUrl } from "./utils/placeholder";
-import { lightTheme, darkTheme } from "../themes"; // replace with the actual path
-import { ThemeProvider } from "styled-components";
+import { lightTheme, darkTheme } from "../themes";
 import { Appearance } from "react-native";
 
-const { width: screenWidth } = Dimensions.get("window");
+const CarouselItem = ({ item, theme }) => {
+  return (
+    <View
+      style={{
+        backgroundColor: theme.background,
+        height: "100%",
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Image
+        source={{ uri: item.picture }}
+        style={{ width: 200, height: 200 }}
+      />
+      <Text style={{ fontSize: 30, marginTop: 10 }}>{item.title}</Text>
+    </View>
+  );
+};
 
-const PersonaCarousel = ({ theme: themeProp, onSnap }) => {
+const PersonaCarousel = ({ theme: themeProp }) => {
   const colorScheme = Appearance.getColorScheme();
   const theme = themeProp === "dark" ? darkTheme : lightTheme;
-
-  const handlePersonaSelection = (index) => {
-    let Persona = index;
-    
-  };
 
   const carouselItems = [
     { id: 1, title: "Item 1", picture: placeholderUrl(200) },
@@ -23,43 +35,15 @@ const PersonaCarousel = ({ theme: themeProp, onSnap }) => {
     { id: 3, title: "Item 3", picture: placeholderUrl(200) },
   ];
 
-  const renderItem = ({ item, index }) => {
-    return (
-      <View
-        style={{
-          backgroundColor: theme.background,
-          borderRadius: 5,
-          height: 250,
-          padding: 50,
-          marginHorizontal: 25,
-          marginVertical: 15,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Image
-          source={{ uri: item.picture }}
-          style={{ width: 200, height: 200 }}
-        />
-        <Text style={{ fontSize: 30, color: theme.text, marginVertical:10 }}>{item.title}</Text>
-      </View>
-    );
-  };
-
   return (
-    <ThemeProvider theme={theme}>
-      <Carousel
-        layout={"default"}
-        data={carouselItems}
-        sliderWidth={screenWidth}
-        itemWidth={270}
-        renderItem={renderItem}
-        onSnapToItem={(index) => onSnap(index)}
-        loop={true}
-      />
-    </ThemeProvider>
+    <View style={{ height: "50%" }}>
+      <Swiper showsButtons={false} showsPagination={false}>
+        {carouselItems.map((item, index) => (
+          <CarouselItem key={index} item={item} theme={theme} />
+        ))}
+      </Swiper>
+    </View>
   );
 };
 
 export default PersonaCarousel;
-

@@ -9,11 +9,6 @@ export default function HomeScreen() {
   const colorScheme = Appearance.getColorScheme();
   const theme = colorScheme === "dark" ? darkTheme : lightTheme;
 
-  const handleSnap = (index: number) => {
-    console.log(index);
-    // TODO: goto chat
-  }
-
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -26,7 +21,7 @@ export default function HomeScreen() {
     },
     content: {
         flex: 1,
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center",
         },
   });
@@ -36,7 +31,7 @@ export default function HomeScreen() {
       <SafeAreaView style={styles.container}>
         <Topbar title="PractyAI" theme={colorScheme} />
         <View style={styles.content}>
-          <PersonaCarousel theme={colorScheme} onSnap={handleSnap}/>
+          <PersonaCarousel theme={colorScheme}/>
         </View>
       </SafeAreaView>
     </ThemeProvider>
