@@ -26,7 +26,7 @@ const Topbar: React.FC<TopbarProps> = ({ title, theme: themeProp }) => {
     },
     title: {
       color: theme.text,
-      fontSize: 20,
+      fontSize: 28,
       fontWeight: "bold",
     },
     spacer: {
