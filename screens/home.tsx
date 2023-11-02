@@ -3,10 +3,16 @@ import { SafeAreaView, View, Text, StyleSheet, Appearance } from "react-native";
 import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme } from "../themes";
 import Topbar from "../components/topbar";
+import PersonaCarousel from "../components/personaselection";
 
 export default function HomeScreen() {
   const colorScheme = Appearance.getColorScheme();
   const theme = colorScheme === "dark" ? darkTheme : lightTheme;
+
+  const handleSnap = (index: number) => {
+    console.log(index);
+    // TODO: goto chat
+  }
 
   const styles = StyleSheet.create({
     container: {
@@ -30,7 +36,7 @@ export default function HomeScreen() {
       <SafeAreaView style={styles.container}>
         <Topbar title="PractyAI" theme={colorScheme} />
         <View style={styles.content}>
-          <Text style={styles.title}>Home Screen</Text>
+          <PersonaCarousel theme={colorScheme} onSnap={handleSnap}/>
         </View>
       </SafeAreaView>
     </ThemeProvider>
