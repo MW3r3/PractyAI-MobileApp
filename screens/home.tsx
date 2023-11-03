@@ -4,10 +4,17 @@ import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme } from "../themes";
 import Topbar from "../components/topbar";
 import PersonaCarousel from "../components/personaselection";
+import Mistakes from "../components/mistakes";
+
 
 export default function HomeScreen() {
+  const handleMistakePress = (mistake) => {
+    console.log(`Mistake pressed: ${mistake}`);}
+	const handlePersonaSelection = (persona) => {
+		console.log(`Persona selected: ${persona}`);}	
+
   const colorScheme = Appearance.getColorScheme();
-  const theme = colorScheme === "dark" ? darkTheme : lightTheme;
+	const theme = colorScheme === "light" ? darkTheme : lightTheme;	
 
   const styles = StyleSheet.create({
     container: {
@@ -29,9 +36,10 @@ export default function HomeScreen() {
   return (
     <ThemeProvider theme={theme}>
       <SafeAreaView style={styles.container}>
-        <Topbar title="PractyAI" theme={colorScheme} />
+        <Topbar title="PractyAI" theme={theme} />
         <View style={styles.content}>
-          <PersonaCarousel theme={colorScheme}/>
+          <PersonaCarousel  onIndexChange={handlePersonaSelection} theme={theme}/>
+					<Mistakes theme={theme} onMistakePress={handleMistakePress}/>
         </View>
       </SafeAreaView>
     </ThemeProvider>

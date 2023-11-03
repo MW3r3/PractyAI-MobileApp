@@ -11,6 +11,8 @@ export const lightTheme = {
   warn: '#ffff00',
   text: '#161618',
   item: '#161618',
+  white: '#ffffff',
+  black: '#000000',
 };
 
 export const darkTheme = {
@@ -26,4 +28,6 @@ export const darkTheme = {
   warn: '#ffff00',
   text: '#ffffff',
   item: '#ffffff',
+  white: '#ffffff',
+  black: '#000000',
 };

@@ -1,47 +1,60 @@
-import React from "react";
-import { View, Text, Image } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Text, Image } from "react-native";
 import Swiper from "react-native-swiper";
 import { placeholderUrl } from "./utils/placeholder";
-import { lightTheme, darkTheme } from "../themes";
-import { Appearance } from "react-native";
+
+const styles = StyleSheet.create({
+  container: {
+    height: "100%",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image: {
+    width: 200,
+    height: 200,
+  },
+  text: {
+    fontSize: 30,
+    marginTop: 10,
+  },
+});
 
 const CarouselItem = ({ item, theme }) => {
   return (
-    <View
-      style={{
-        backgroundColor: theme.background,
-        height: "100%",
-        width: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Image
-        source={{ uri: item.picture }}
-        style={{ width: 200, height: 200 }}
-      />
-      <Text style={{ fontSize: 30, marginTop: 10 }}>{item.title}</Text>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <Image source={{ uri: item.picture }} style={styles.image} />
+      <Text style={[styles.text, { color: theme.text }]}>{item.title}</Text>
     </View>
   );
 };
 
-const PersonaCarousel = ({ theme: themeProp }) => {
-  const colorScheme = Appearance.getColorScheme();
-  const theme = themeProp === "dark" ? darkTheme : lightTheme;
-
+const PersonaCarousel = ({ theme, onIndexChange }) => {
+  
+  const [isReady, setIsReady] = React.useState(false);
   const carouselItems = [
-    { id: 1, title: "Item 1", picture: placeholderUrl(200) },
-    { id: 2, title: "Item 2", picture: placeholderUrl(200) },
-    { id: 3, title: "Item 3", picture: placeholderUrl(200) },
+    { id: 0, title: "Item 1", picture: placeholderUrl(200) },
+    { id: 1, title: "Item 2", picture: placeholderUrl(200) },
+    { id: 2, title: "Item 3", picture: placeholderUrl(200) },
   ];
 
+ const handleIndexChanged = (index) => {
+     onIndexChange(index);
+ };
+
   return (
-    <View style={{ height: "50%" }}>
-      <Swiper showsButtons={false} showsPagination={false}>
-        {carouselItems.map((item, index) => (
-          <CarouselItem key={index} item={item} theme={theme} />
-        ))}
-      </Swiper>
+    <View style={{ height: "50%" }} onLayout={() => setIsReady(true)}>
+      {isReady && (
+        <Swiper
+          showsButtons={false}
+          showsPagination={false}
+          onIndexChanged={handleIndexChanged}
+        >
+          {carouselItems.map((item, index) => (
+            <CarouselItem key={index} item={item} theme={theme} />
+          ))}
+        </Swiper>
+      )}
     </View>
   );
 };

@@ -1,53 +1,87 @@
-import React from "react";
-import { StyleSheet, Text, View, Appearance, Image} from "react-native";
-import { lightTheme, darkTheme } from "../themes";
-import { ThemeProvider } from "styled-components";
+import React, { useContext } from "react";
+import { View, Text, StyleSheet, VirtualizedList } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { placeholderUrl } from "./utils/placeholder";
-
+import { AdminContext } from "../providers/AdminContext"; // replace with the actual path
 
 interface TopbarProps {
   title: string;
-  theme: "light" | "dark";
+  theme: {
+    background: string;
+    text: string;
+    primary: string;
+    white: string;
+  };
 }
 
-const Topbar: React.FC<TopbarProps> = ({ title, theme: themeProp }) => {
-  const colorScheme = Appearance.getColorScheme();
-  const theme = themeProp === "dark" ? darkTheme : lightTheme;
+const Topbar: React.FC<TopbarProps> = ({ title, theme }) => {
+  const { userType } = useContext(AdminContext); // add this line
 
   const styles = StyleSheet.create({
     container: {
       flexDirection: "row",
       backgroundColor: theme.background,
       height: 60,
-      justifyContent: "space-between",
+      justifyContent: "flex-start",
       alignItems: "center",
       paddingHorizontal: 10,
+    },
+    leftcontainer: {
+      flex: 1,
+      flexDirection: "row",
+      justifyContent: "flex-start",
+      alignItems: "center",
+    },
+    midcontainer: {
+      flex: 1,
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    rightcontainer: {
+      flex: 1,
+      flexDirection: "row",
+      justifyContent: "flex-end",
+      alignItems: "center",
     },
     title: {
       color: theme.text,
       fontSize: 28,
       fontWeight: "bold",
     },
-    spacer: {
-      width: 30,
+    
+    badgeContainer: {
+      width: 50,
+      height: 30,
+      justifyContent: "center",
+      fontSize: 16,
+      fontWeight: "bold",
+      backgroundColor: theme.primary,
+      padding: 5,
+      marginRight: 10,
+      borderRadius: 20,
     },
-    pfp: {
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        backgroundColor: theme.text,
-        },
+    badgeText:{
+      textAlign: "center",
+      color: theme.white,
+      fontSize: 16,
+      fontWeight: "bold",
+    }
   });
 
   return (
-    <ThemeProvider theme={theme}>
-      <View style={styles.container}>
-        <Icon name="menu" size={40} color={theme.text} />
-        <Text style={styles.title}>{title}</Text>
-        <Image style={styles.pfp} source={{ uri:placeholderUrl(40) }} />
+    <View style={styles.container}>
+      <View style={styles.leftcontainer}>
+        <Icon name="menu-outline" size={40} color={theme.text} />
       </View>
-    </ThemeProvider>
+      <View style={styles.midcontainer}>
+        <Text style={styles.title}>{title}</Text>
+      </View>
+      <View style={styles.rightcontainer}>
+        <View style={styles.badgeContainer}>
+        <Text style={styles.badgeText}>{userType}</Text>
+        </View>
+      </View>
+    </View>
   );
 };
 

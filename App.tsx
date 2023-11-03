@@ -7,6 +7,7 @@ import Register from "./screens/register";
 import Home from "./screens/home";
 import Profile from "./screens/profile";
 import Chat from "./screens/chat";
+import { UserProvider } from "./providers/UserProvider";
 
 
 const Stack = createStackNavigator();
@@ -14,6 +15,7 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
+    <UserProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
@@ -43,4 +45,5 @@ export default function App() {
         />
       </Stack.Navigator>
     </NavigationContainer>
+    </UserProvider>
   );}
