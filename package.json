@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@babel/preset-env": "^7.23.2",
+    "@react-native-async-storage/async-storage": "^1.19.4",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/stack": "^6.3.20",
     "deprecated-react-native-prop-types": "^5.0.0",

@@ -6,6 +6,9 @@
       "dom",
       "esnext"
     ],
+    "paths": {
+      "@firebase/auth": ["./node_modules/@firebase/auth/dist/index.rn.d.ts"]
+    },
     "moduleResolution": "node",
     "noEmit": true,
     "skipLibCheck": true,
