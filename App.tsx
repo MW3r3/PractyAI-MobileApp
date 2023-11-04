@@ -10,6 +10,7 @@ import Register from "./screens/register";
 import Home from "./screens/home";
 import Profile from "./screens/profile";
 import Chat from "./screens/chat";
+import Buy from "./screens/buy"
 import { UserProvider } from "./providers/UserProvider";
 
 type RootParamList = {
@@ -18,11 +19,13 @@ type RootParamList = {
   Register: undefined;
   Profile: undefined;
   Chat: undefined;
+  Buy: undefined;
 };
 
 const Stack = createStackNavigator<RootParamList>();
 
 function Navigation() {
+  
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -31,9 +34,8 @@ function Navigation() {
         console.log("User is logged in:", user["email"]);
         navigation.reset({
           index: 0,
-          routes: [{ name: "Register", params: undefined }] as Array<Route<"Register">>,
+          routes: [{ name: "Home", params: undefined }] as Array<Route<"Home">>,
         });
-        // TODO: change to Home
       } else {
         console.log("User is not logged in");
         navigation.reset({
@@ -43,7 +45,6 @@ function Navigation() {
       }
     });
 
-    
     return () => unsubscribe();
   }, []);
 
@@ -74,6 +75,10 @@ function Navigation() {
         component={Chat}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+      name="Buy"
+      component={Buy}
+      options= {{ headerShown: false }}/>
     </Stack.Navigator>
   );
 }

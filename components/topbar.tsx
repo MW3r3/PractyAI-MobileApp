@@ -1,10 +1,19 @@
-import React, { useContext } from "react";
-import { View, Text, StyleSheet, VirtualizedList } from "react-native";
+import React, { useContext, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  VirtualizedList,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { AdminContext } from "../providers/AdminContext"; // replace with the actual path
+import { AdminContext } from "../providers/AdminContext";
+import { placeholderUrl } from "./utils/placeholder";
 
 interface TopbarProps {
   title: string;
+  
   theme: {
     background: string;
     text: string;
@@ -14,7 +23,14 @@ interface TopbarProps {
 }
 
 const Topbar: React.FC<TopbarProps> = ({ title, theme }) => {
-  const { userType } = useContext(AdminContext); // add this line
+  const { userType } = useContext(AdminContext);
+
+  const handleBadgePress = () => {
+    console.log("badge pressed");
+  };
+  const handleProfilePress = () => {
+    console.log("profile pressed");
+  }
 
   const styles = StyleSheet.create({
     container: {
@@ -48,7 +64,7 @@ const Topbar: React.FC<TopbarProps> = ({ title, theme }) => {
       fontSize: 28,
       fontWeight: "bold",
     },
-    
+
     badgeContainer: {
       width: 50,
       height: 30,
@@ -60,26 +76,31 @@ const Topbar: React.FC<TopbarProps> = ({ title, theme }) => {
       marginRight: 10,
       borderRadius: 20,
     },
-    badgeText:{
+    badgeText: {
       textAlign: "center",
       color: theme.white,
       fontSize: 16,
       fontWeight: "bold",
-    }
+    },
   });
 
   return (
     <View style={styles.container}>
       <View style={styles.leftcontainer}>
-        <Icon name="menu-outline" size={40} color={theme.text} />
+        <TouchableOpacity onPress={() => handleBadgePress()}>
+          <View style={styles.badgeContainer}>
+            <Text style={styles.badgeText}>{userType}</Text>
+          </View>
+        </TouchableOpacity>
       </View>
       <View style={styles.midcontainer}>
         <Text style={styles.title}>{title}</Text>
       </View>
       <View style={styles.rightcontainer}>
-        <View style={styles.badgeContainer}>
-        <Text style={styles.badgeText}>{userType}</Text>
-        </View>
+      <TouchableOpacity onPress={handleProfilePress}>
+        {//TODO: Replace with user profile picture
+        }
+      </TouchableOpacity>
       </View>
     </View>
   );
