@@ -5,15 +5,13 @@ import {
   StyleSheet,
   VirtualizedList,
   TouchableOpacity,
-  Image,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import MenuDropdown from "./menudropdown";
 import { AdminContext } from "../providers/AdminContext";
-import { placeholderUrl } from "./utils/placeholder";
 
 interface TopbarProps {
   title: string;
-  
   theme: {
     background: string;
     text: string;
@@ -22,15 +20,15 @@ interface TopbarProps {
   };
 }
 
-const Topbar: React.FC<TopbarProps> = ({ title, theme }) => {
+const Topbar: React.FC<TopbarProps> = ({ title, theme, handle }) => {
   const { userType } = useContext(AdminContext);
-
+  
+  
+ 
   const handleBadgePress = () => {
-    console.log("badge pressed");
-  };
-  const handleProfilePress = () => {
-    console.log("profile pressed");
+    console.log("badge pressed")
   }
+  
 
   const styles = StyleSheet.create({
     container: {
@@ -87,20 +85,19 @@ const Topbar: React.FC<TopbarProps> = ({ title, theme }) => {
   return (
     <View style={styles.container}>
       <View style={styles.leftcontainer}>
-        <TouchableOpacity onPress={() => handleBadgePress()}>
-          <View style={styles.badgeContainer}>
-            <Text style={styles.badgeText}>{userType}</Text>
-          </View>
+        <TouchableOpacity onPress={() => handleMenuPress()}>
+          <Icon name="menu" size={40} color={theme.text} />
         </TouchableOpacity>
       </View>
       <View style={styles.midcontainer}>
         <Text style={styles.title}>{title}</Text>
       </View>
       <View style={styles.rightcontainer}>
-      <TouchableOpacity onPress={handleProfilePress}>
-        {//TODO: Replace with user profile picture
-        }
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleBadgePress()}>
+          <View style={styles.badgeContainer}>
+            <Text style={styles.badgeText}>{userType}</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
