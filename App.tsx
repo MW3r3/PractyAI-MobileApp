@@ -1,17 +1,16 @@
 import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
-import { auth } from "./firebase";
+import { auth } from "./firebase"; 
 
 import Login from "./screens/login";
 import Register from "./screens/register";
 import Home from "./screens/home";
 import Profile from "./screens/profile";
 import Chat from "./screens/chat";
-import Buy from "./screens/buy";
+import Buy from "./screens/buy"
 import { UserProvider } from "./providers/UserProvider";
 
 type RootParamList = {
@@ -24,9 +23,31 @@ type RootParamList = {
 };
 
 const Stack = createStackNavigator<RootParamList>();
-const Drawer = createDrawerNavigator();
 
-function StackNavigator() {
+function Navigation() {
+  
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("User is logged in:", user["email"]);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Home", params: undefined }] as Array<Route<"Home">>,
+        });
+      } else {
+        console.log("User is not logged in");
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Login", params: undefined }] as Array<Route<"Login">>,
+        });
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -55,21 +76,10 @@ function StackNavigator() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Buy"
-        component={Buy}
-        options={{ headerShown: false }}
-      />
-      {/* Add more screens as needed */}
+      name="Buy"
+      component={Buy}
+      options= {{ headerShown: false }}/>
     </Stack.Navigator>
-  );
-}
-
-function DrawerNavigator() {
-  return (
-    <Drawer.Navigator initialRouteName="Home">
-      <Drawer.Screen name="Home" component={StackNavigator} />
-      {/* Add more screens as needed */}
-    </Drawer.Navigator>
   );
 }
 
@@ -77,7 +87,7 @@ export default function App() {
   return (
     <UserProvider>
       <NavigationContainer>
-        <DrawerNavigator />
+        <Navigation />
       </NavigationContainer>
     </UserProvider>
   );
