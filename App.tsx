@@ -31,8 +31,9 @@ function Navigation() {
         console.log("User is logged in:", user["email"]);
         navigation.reset({
           index: 0,
-          routes: [{ name: "Home", params: undefined }] as Array<Route<"Home">>,
+          routes: [{ name: "Register", params: undefined }] as Array<Route<"Register">>,
         });
+        // TODO: change to Home
       } else {
         console.log("User is not logged in");
         navigation.reset({

@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, View, Text, StyleSheet, Appearance } from "react-native";
+import { SafeAreaView, View, StyleSheet, Appearance } from "react-native";
 import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme } from "../themes";
 import Topbar from "../components/topbar";

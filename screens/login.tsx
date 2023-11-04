@@ -11,7 +11,7 @@ import {
 import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme } from "../themes";
 import { TextInput } from "react-native-gesture-handler";
-import {  signInWithEmailAndPassword, sendEmailVerification, signOut } from "firebase/auth";
+import {  signInWithEmailAndPassword, sendEmailVerification, signOut, sendPasswordResetEmail} from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/native";
 
@@ -24,6 +24,8 @@ export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+
+
   const handleLogin = async () => {
     console.log(email, password);
     console.log("initiating login");
@@ -35,7 +37,7 @@ export default function LoginScreen() {
       );
       console.log("login successful");
       const user = userCredential.user;
-      console.log(user);
+      console.log("email:",user["email"],"mailVerified:", user["emailVerified"],"Userid:", user["uid"],"username:",user["displayName"]);
 
       if (!user.emailVerified) {
         await sendEmailVerification(user);
@@ -68,8 +70,8 @@ export default function LoginScreen() {
         case "auth/user-not-found":
           errorMessage = "No user found with this email address.";
           break;
-        case "auth/wrong-password":
-          errorMessage = "The password is incorrect.";
+        case "auth/invalid-login-credentials":
+          errorMessage = "The email or password is incorrect. if you forgot your password, please reset it.";
           break;
         case "auth/too-many-requests":
           errorMessage =
@@ -86,9 +88,23 @@ export default function LoginScreen() {
       }
 
       console.log(errorCode, errorMessage);
-      Alert.alert("Error", errorMessage, [
-        { text: "OK", onPress: () => console.log("OK Pressed") },
-      ]);
+      if (errorCode === "auth/invalid-login-credentials") {
+        Alert.alert(
+          "Login failed",
+          errorMessage,
+          [
+            { text: "OK", onPress: () => console.log("OK Pressed") },
+            { text: "Reset Password", onPress: () => sendPasswordResetEmail(auth, email) },
+          ]
+        );
+      }
+      else {
+        Alert.alert(
+          "Login failed",
+          errorMessage,
+          [{ text: "OK", onPress: () => console.log("OK Pressed") }]
+        );
+      }
     }
   };
 
@@ -100,9 +116,10 @@ export default function LoginScreen() {
       backgroundColor: theme.background,
     },
     title: {
-      fontSize: 20,
+      fontSize: 30,
       fontWeight: "bold",
       color: theme.text,
+      marginBottom: 20,
     },
     input: {
       height: 40,
@@ -144,6 +161,7 @@ export default function LoginScreen() {
   return (
     <ThemeProvider theme={theme}>
       <SafeAreaView style={styles.container}>
+        <Text style={styles.title}>PractyAI</Text>
         <TextInput
           style={styles.input}
           placeholder="Your Email..."
