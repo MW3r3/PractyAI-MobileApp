@@ -10,10 +10,13 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import { AdminContext } from "../providers/AdminContext";
 import { placeholderUrl } from "./utils/placeholder";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootParamList } from "../App";
 
 interface TopbarProps {
   title: string;
-  
+
   theme: {
     background: string;
     text: string;
@@ -24,13 +27,16 @@ interface TopbarProps {
 
 const Topbar: React.FC<TopbarProps> = ({ title, theme }) => {
   const { userType } = useContext(AdminContext);
+  const navigation = useNavigation<StackNavigationProp<RootParamList>>();
 
   const handleBadgePress = () => {
-    console.log("badge pressed");
+    console.log("Going to buy page");
+    navigation.navigate("Buy");
   };
   const handleProfilePress = () => {
-    console.log("profile pressed");
-  }
+    console.log("Going to profile page");
+    navigation.navigate("Profile");
+  };
 
   const styles = StyleSheet.create({
     container: {
@@ -97,10 +103,14 @@ const Topbar: React.FC<TopbarProps> = ({ title, theme }) => {
         <Text style={styles.title}>{title}</Text>
       </View>
       <View style={styles.rightcontainer}>
-      <TouchableOpacity onPress={handleProfilePress}>
-        {//TODO: Replace with user profile picture
-        }
-      </TouchableOpacity>
+        <TouchableOpacity onPress={handleProfilePress}>
+          {
+            <Image
+              source={{ uri: placeholderUrl(40) }}
+              style={{ width: 40, height: 40, borderRadius: 20 }}
+            />
+          }
+        </TouchableOpacity>
       </View>
     </View>
   );

@@ -6,25 +6,29 @@ import {
   StyleSheet,
   Appearance,
   TouchableOpacity,
-  Alert
+  Alert,
 } from "react-native";
 import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme } from "../themes";
 import { TextInput } from "react-native-gesture-handler";
-import {  signInWithEmailAndPassword, sendEmailVerification, signOut, sendPasswordResetEmail} from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  sendEmailVerification,
+  signOut,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/native";
-
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootParamList } from "../App"; // adjust the path as necessary
 
 export default function LoginScreen() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<RootParamList>>();
   const colorScheme = Appearance.getColorScheme();
   const theme = colorScheme === "light" ? darkTheme : lightTheme;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-
 
   const handleLogin = async () => {
     console.log(email, password);
@@ -37,7 +41,16 @@ export default function LoginScreen() {
       );
       console.log("login successful");
       const user = userCredential.user;
-      console.log("email:",user["email"],"mailVerified:", user["emailVerified"],"Userid:", user["uid"],"username:",user["displayName"]);
+      console.log(
+        "email:",
+        user["email"],
+        "mailVerified:",
+        user["emailVerified"],
+        "Userid:",
+        user["uid"],
+        "username:",
+        user["displayName"]
+      );
 
       if (!user.emailVerified) {
         await sendEmailVerification(user);
@@ -71,7 +84,8 @@ export default function LoginScreen() {
           errorMessage = "No user found with this email address.";
           break;
         case "auth/invalid-login-credentials":
-          errorMessage = "The email or password is incorrect. if you forgot your password, please reset it.";
+          errorMessage =
+            "The email or password is incorrect. if you forgot your password, please reset it.";
           break;
         case "auth/too-many-requests":
           errorMessage =
@@ -89,21 +103,17 @@ export default function LoginScreen() {
 
       console.log(errorCode, errorMessage);
       if (errorCode === "auth/invalid-login-credentials") {
-        Alert.alert(
-          "Login failed",
-          errorMessage,
-          [
-            { text: "OK", onPress: () => console.log("OK Pressed") },
-            { text: "Reset Password", onPress: () => sendPasswordResetEmail(auth, email) },
-          ]
-        );
-      }
-      else {
-        Alert.alert(
-          "Login failed",
-          errorMessage,
-          [{ text: "OK", onPress: () => console.log("OK Pressed") }]
-        );
+        Alert.alert("Login failed", errorMessage, [
+          { text: "OK", onPress: () => console.log("OK Pressed") },
+          {
+            text: "Reset Password",
+            onPress: () => sendPasswordResetEmail(auth, email),
+          },
+        ]);
+      } else {
+        Alert.alert("Login failed", errorMessage, [
+          { text: "OK", onPress: () => console.log("OK Pressed") },
+        ]);
       }
     }
   };
@@ -183,7 +193,7 @@ export default function LoginScreen() {
         </TouchableOpacity>
         <View style={styles.registerContainer}>
           <Text style={styles.registerText}>Don't have an account?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
             <Text style={styles.registerButton}>Register</Text>
           </TouchableOpacity>
         </View>
