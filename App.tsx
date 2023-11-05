@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { getAuth } from "firebase/auth";
@@ -12,6 +12,10 @@ import { UserProvider } from "./providers/UserProvider";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProp } from "@react-navigation/native";
 
+// TODO: ADD drawer navigation
+// TODO: ADD chat Screen
+// TODO: ADD buy Screen
+// TODO: Replace placeholder images
 
 
 export type RootParamList = {
@@ -24,7 +28,6 @@ export type RootParamList = {
 };
 
 const Stack = createStackNavigator<RootParamList>();
-
 
 function StackNavigator() {
   const auth = getAuth();
@@ -87,7 +90,6 @@ function StackNavigator() {
 }
 
 export default function App() {
-  
   return (
     <UserProvider>
       <NavigationContainer>

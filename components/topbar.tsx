@@ -1,9 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import {
   View,
   Text,
   StyleSheet,
-  VirtualizedList,
   TouchableOpacity,
   Image,
 } from "react-native";
@@ -16,18 +15,23 @@ import { RootParamList } from "../App";
 
 interface TopbarProps {
   title: string;
-
+  titleSize: number;
+  pfpVisible?: boolean;
+  badgeVisible?: boolean;
+  
   theme: {
-    background: string;
-    text: string;
-    primary: string;
-    white: string;
+    background?: string;
+    text?: string;
+    primary?: string;
+    white?: string;
   };
 }
 
-const Topbar: React.FC<TopbarProps> = ({ title, theme }) => {
+const Topbar: React.FC<TopbarProps> = ({ title, titleSize, theme, pfpVisible, badgeVisible}) => {
   const { userType } = useContext(AdminContext);
   const navigation = useNavigation<StackNavigationProp<RootParamList>>();
+
+  
 
   const handleBadgePress = () => {
     console.log("Going to buy page");
@@ -67,8 +71,8 @@ const Topbar: React.FC<TopbarProps> = ({ title, theme }) => {
     },
     title: {
       color: theme.text,
-      fontSize: 28,
-      fontWeight: "bold",
+      fontSize: titleSize,
+      fontWeight: "700",
     },
 
     badgeContainer: {
@@ -91,7 +95,9 @@ const Topbar: React.FC<TopbarProps> = ({ title, theme }) => {
   });
 
   return (
+    
     <View style={styles.container}>
+      {badgeVisible && (
       <View style={styles.leftcontainer}>
         <TouchableOpacity onPress={() => handleBadgePress()}>
           <View style={styles.badgeContainer}>
@@ -99,9 +105,11 @@ const Topbar: React.FC<TopbarProps> = ({ title, theme }) => {
           </View>
         </TouchableOpacity>
       </View>
+      )}
       <View style={styles.midcontainer}>
         <Text style={styles.title}>{title}</Text>
       </View>
+      {pfpVisible && (
       <View style={styles.rightcontainer}>
         <TouchableOpacity onPress={handleProfilePress}>
           {
@@ -112,7 +120,9 @@ const Topbar: React.FC<TopbarProps> = ({ title, theme }) => {
           }
         </TouchableOpacity>
       </View>
+      )}
     </View>
+        
   );
 };
 

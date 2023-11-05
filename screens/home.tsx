@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { SafeAreaView, View, StyleSheet, Appearance } from "react-native";
 import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme } from "../themes";
@@ -17,12 +17,7 @@ export default function HomeScreen() {
   const colorScheme = Appearance.getColorScheme();
   const theme = colorScheme === "light" ? darkTheme : lightTheme;
 
-  const [open, setOpen] = useState(false);
-
-  const toggleOpen = () => {
-    setOpen(!open);
-    console.log(open);
-  };
+  
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -49,7 +44,7 @@ export default function HomeScreen() {
   return (
     <ThemeProvider theme={theme}>
       <SafeAreaView style={styles.container}>
-        <Topbar title="PractyAI" theme={theme} />
+        <Topbar title="PractyAI" titleSize={28} theme={theme} pfpVisible={true} badgeVisible={true}/>
         <View style={styles.content}>
           <PersonaCarousel
             onIndexChange={handlePersonaSelection}

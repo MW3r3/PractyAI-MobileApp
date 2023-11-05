@@ -20,7 +20,7 @@ import {
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootParamList } from "../App"; // adjust the path as necessary
+import { RootParamList } from "../App"; 
 
 export default function LoginScreen() {
   const navigation = useNavigation<StackNavigationProp<RootParamList>>();
@@ -31,7 +31,7 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    console.log(email, password);
+    
     console.log("initiating login");
     try {
       const userCredential = await signInWithEmailAndPassword(
