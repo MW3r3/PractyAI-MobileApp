@@ -16,6 +16,8 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { placeholderUrl } from "../components/utils/placeholder";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootParamList } from "../App";
+import { set, ref } from "firebase/database";
+import { db } from "../firebase";
 
 type ProfileProps = {
   navigation: StackNavigationProp<RootParamList, "Profile">;
@@ -69,13 +71,13 @@ const Profile: React.FC<ProfileProps> = ({ navigation }) => {
 
   const handleSave = async () => {
     if (user) {
-      const auth = getAuth();
       const credential = EmailAuthProvider.credential(user.email, password);
       try {
         await reauthenticateWithCredential(user, credential);
         await updateProfile(user, {
           displayName: username,
         });
+        await set(ref(db, `users/${user.uid}/username`), username);
         setIsEditable(false);
       } catch (error) {
         console.log("Error re-authenticating:", error);

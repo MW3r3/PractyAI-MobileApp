@@ -33,12 +33,6 @@ export default function HomeScreen() {
       justifyContent: "flex-start",
       alignItems: "center",
     },
-    sideBar: {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      zIndex: 100,
-    },
   });
 
   return (

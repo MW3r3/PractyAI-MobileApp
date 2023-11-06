@@ -16,9 +16,12 @@ import { auth } from "../firebase";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  updateProfile,
 } from "firebase/auth";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootParamList } from "../App";
+import { db } from "../firebase";
+import { set, ref } from "firebase/database";
 
 export default function RegisterScreen() {
   const navigation = useNavigation<StackNavigationProp<RootParamList>>();
@@ -90,8 +93,15 @@ export default function RegisterScreen() {
     }
     console.log("initiating signup");
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then( async (userCredential) => {
         const user = userCredential.user;
+        await updateProfile(user, {
+          displayName: username,
+        });
+        const response = await fetch('https://ipapi.co/json/');
+        const data = await response.json();
+        const region = data.country;
+
         console.log("signup successful");
         console.log(
           "email:",
@@ -109,6 +119,25 @@ export default function RegisterScreen() {
           "Please check your inbox and verify your email.",
           [{ text: "OK", onPress: () => console.log("OK pressed") }]
         );
+          set(ref(db, "users/" + user.uid), {
+            username: username,
+            email: email,
+            isAdmin: false,
+            isStaff: false,
+            isBanned: false,
+            phoneNumber: null,
+            totalMessages: 0,
+            messageLimit: 200,
+            messageUsage: 0,
+            totalSp: 0,
+            spLimit: 3,
+            spUsage: 0,
+            timeStamp: new Date().toLocaleDateString("en-US"),
+            subscriptionStart: null,
+            subscriptionEnd: null,
+            subscriptionType: "Free",
+            region:region,
+          });
       })
       .catch((error) => {
         const errorCode = error.code;

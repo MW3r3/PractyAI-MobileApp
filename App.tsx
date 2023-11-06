@@ -15,7 +15,7 @@ import { NavigationProp } from "@react-navigation/native";
 // TODO: ADD drawer navigation
 // TODO: ADD chat Screen
 // TODO: ADD buy Screen
-// TODO: Replace placeholder images
+// TODO: Replace placeholder images with actual images
 
 
 export type RootParamList = {

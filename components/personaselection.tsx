@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 200,
+    borderRadius: 50,
   },
   text: {
     fontSize: 30,
@@ -43,7 +44,7 @@ const PersonaCarousel = ({ theme, onIndexChange }) => {
  };
 
   return (
-    <View style={{ height: "50%" }} onLayout={() => setIsReady(true)}>
+    <View style={{ height: "50%"  }} onLayout={() => setIsReady(true)}>
       {isReady && (
         <Swiper
           showsButtons={false}
