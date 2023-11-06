@@ -19,6 +19,7 @@ import { RootParamList } from "../App";
 import { set, ref } from "firebase/database";
 import { db } from "../firebase";
 import UsageInfo from "../components/usage";
+import { ScrollView } from "react-native-gesture-handler";
 
 type ProfileProps = {
   navigation: StackNavigationProp<RootParamList, "Profile">;
@@ -100,73 +101,84 @@ const Profile: React.FC<ProfileProps> = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.profileContainer}>
-        <Image
-          source={{ uri: placeholderUrl(150) }}
-          style={styles.profilePicture}
-        />
-        <View>
-          <Text style={styles.profileName}>{user?.displayName}</Text>
-        </View>
-      </View>
-      <View style={styles.userInfo}>
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputTitle}>Email</Text>
-          <TextInput
-            style={styles.input}
-            value={user?.email}
-            onChangeText={setEmail}
-            editable={false}
-            keyboardType="email-address"
-            autoCapitalize="none"
+      <ScrollView>
+        <View style={styles.profileContainer}>
+          <Image
+            source={{ uri: placeholderUrl(150) }}
+            style={styles.profilePicture}
           />
+          <View>
+            <Text style={styles.profileName}>{user?.displayName}</Text>
+          </View>
         </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputTitle}>Username</Text>
-          <TextInput
-            style={styles.input}
-            value={username}
-            onChangeText={setUsername}
-            editable={isEditable}
-            keyboardType="default"
-            placeholder={user?.displayName}
-            placeholderTextColor={theme.text}
-          />
-        </View>
-        {isEditable ? (
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputTitle}>Password</Text>
-          <TextInput
-            style={styles.input}
-            value={password}
-            onChangeText={setPassword}
-            editable={isEditable}
-            secureTextEntry={true}
-            keyboardType="default"
-            autoCapitalize="none"
-            autoComplete="off"
-            autoCorrect={false}
-          />
-        </View>
-        ) : null}
-        <View style={styles.actionButtons}>
+        <View style={styles.userInfo}>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputTitle}>Email</Text>
+            <TextInput
+              style={styles.input}
+              value={user?.email}
+              onChangeText={setEmail}
+              editable={false}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputTitle}>Username</Text>
+            <TextInput
+              style={styles.input}
+              value={username}
+              onChangeText={setUsername}
+              editable={isEditable}
+              keyboardType="default"
+              placeholder={user?.displayName}
+              placeholderTextColor={theme.text}
+            />
+          </View>
           {isEditable ? (
-            <TouchableOpacity style={styles.actionButton} onPress={handleCancel}>
-              <Text style={styles.actionButtonText}>Cancel</Text>
-            </TouchableOpacity>
+            <View style={styles.inputContainer}>
+              <Text style={styles.inputTitle}>Password</Text>
+              <TextInput
+                style={styles.input}
+                value={password}
+                onChangeText={setPassword}
+                editable={isEditable}
+                secureTextEntry={true}
+                keyboardType="default"
+                autoCapitalize="none"
+                autoComplete="off"
+                autoCorrect={false}
+              />
+            </View>
           ) : null}
-          {isEditable ? (
-            <TouchableOpacity style={styles.actionButton} onPress={handleSave}>
-              <Text style={styles.actionButtonText}>Save</Text>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity style={styles.actionButton} onPress={handleEditPress}>
-              <Text style={styles.actionButtonText}>Edit</Text>
-            </TouchableOpacity>
-          )}
+          <View style={styles.actionButtons}>
+            {isEditable ? (
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={handleCancel}
+              >
+                <Text style={styles.actionButtonText}>Cancel</Text>
+              </TouchableOpacity>
+            ) : null}
+            {isEditable ? (
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={handleSave}
+              >
+                <Text style={styles.actionButtonText}>Save</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={handleEditPress}
+              >
+                <Text style={styles.actionButtonText}>Edit</Text>
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
-      </View>
-      <UsageInfo theme={theme}/>
+        <UsageInfo theme={theme} />
+      </ScrollView>
     </SafeAreaView>
   );
 };

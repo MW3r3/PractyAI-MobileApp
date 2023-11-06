@@ -43,6 +43,7 @@ const UsageInfo: React.FC<UsageInfoProps> = ({ theme }) => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
+			height: 175,
       justifyContent: "center",
       paddingHorizontal: 10,
       backgroundColor: "#212124",
