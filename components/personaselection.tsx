@@ -24,7 +24,21 @@ const styles = StyleSheet.create({
 const CarouselItem = ({ item, theme }) => {
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <Image source={{ uri: item.picture }} style={styles.image} />
+      <View
+        style={{
+          width: 200,
+          height: 200,
+          borderRadius: 50,
+          backgroundColor: theme.background,
+          shadowColor: theme.primary,
+          shadowOffset: { width: 0, height: 0 },
+          shadowOpacity: 0.8,
+          shadowRadius: 30,
+          elevation: 20, 
+        }}
+      >
+        <Image source={{ uri: item.picture }} style={styles.image} />
+      </View>
       <Text style={[styles.text, { color: theme.text }]}>{item.title}</Text>
     </View>
   );

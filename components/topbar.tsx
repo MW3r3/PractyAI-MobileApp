@@ -24,6 +24,7 @@ interface TopbarProps {
     text?: string;
     primary?: string;
     white?: string;
+    secondary?: string;
   };
 }
 
@@ -73,8 +74,11 @@ const Topbar: React.FC<TopbarProps> = ({ title, titleSize, theme, pfpVisible, ba
       color: theme.text,
       fontSize: titleSize,
       fontWeight: "700",
+      shadowColor: theme.text,
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: 0.4,
+      shadowRadius: 10,
     },
-
     badgeContainer: {
       width: 50,
       height: 30,
@@ -85,6 +89,10 @@ const Topbar: React.FC<TopbarProps> = ({ title, titleSize, theme, pfpVisible, ba
       padding: 5,
       marginRight: 10,
       borderRadius: 20,
+      shadowColor: theme.primary,
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: 0.8,
+      shadowRadius: 10,
     },
     badgeText: {
       textAlign: "center",

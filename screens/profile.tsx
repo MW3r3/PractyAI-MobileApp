@@ -18,6 +18,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootParamList } from "../App";
 import { set, ref } from "firebase/database";
 import { db } from "../firebase";
+import UsageInfo from "../components/usage";
 
 type ProfileProps = {
   navigation: StackNavigationProp<RootParamList, "Profile">;
@@ -165,6 +166,7 @@ const Profile: React.FC<ProfileProps> = ({ navigation }) => {
           )}
         </View>
       </View>
+      <UsageInfo theme={theme}/>
     </SafeAreaView>
   );
 };
