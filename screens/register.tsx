@@ -100,7 +100,7 @@ export default function RegisterScreen() {
         });
         const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
-        const region = data.country;
+        const region = data.region;
 
         console.log("signup successful");
         console.log(
@@ -119,6 +119,26 @@ export default function RegisterScreen() {
           "Please check your inbox and verify your email.",
           [{ text: "OK", onPress: () => console.log("OK pressed") }]
         );
+          console.log({
+            username: username,
+            email: email,
+            isAdmin: false,
+            isStaff: false,
+            isBanned: false,
+            phoneNumber: null,
+            totalMessages: 0,
+            messageLimit: 200,
+            messageUsage: 0,
+            totalSp: 0,
+            spLimit: 3,
+            spUsage: 0,
+            timeStamp: new Date().toLocaleDateString("en-US"),
+            subscriptionStart: null,
+            subscriptionEnd: null,
+            subscriptionType: "Free",
+            region: region,
+          });
+
           set(ref(db, "users/" + user.uid), {
             username: username,
             email: email,
@@ -136,7 +156,9 @@ export default function RegisterScreen() {
             subscriptionStart: null,
             subscriptionEnd: null,
             subscriptionType: "Free",
-            region:region,
+            region: region,
+          }).catch((error) => {
+            console.error("Error writing document: ", error);
           });
       })
       .catch((error) => {
