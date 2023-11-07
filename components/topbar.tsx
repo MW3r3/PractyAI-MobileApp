@@ -78,6 +78,7 @@ const Topbar: React.FC<TopbarProps> = ({ title, titleSize, theme, pfpVisible, ba
       shadowOffset: { width: 0, height: 0 },
       shadowOpacity: 0.4,
       shadowRadius: 10,
+      elevation: 20,
     },
     badgeContainer: {
       width: 50,
@@ -93,6 +94,7 @@ const Topbar: React.FC<TopbarProps> = ({ title, titleSize, theme, pfpVisible, ba
       shadowOffset: { width: 0, height: 0 },
       shadowOpacity: 0.8,
       shadowRadius: 10,
+      elevation: 20,
     },
     badgeText: {
       textAlign: "center",

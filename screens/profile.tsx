@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   Appearance,
-  SafeAreaView,
   View,
   Text,
   TouchableOpacity,
@@ -9,6 +8,7 @@ import {
   TextInput,
   Alert,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { getAuth, updateProfile, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
 import { lightTheme, darkTheme } from "../themes";
 import ProfileStyles from "./profile-styles";
@@ -101,7 +101,7 @@ const Profile: React.FC<ProfileProps> = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false} >
         <View style={styles.profileContainer}>
           <Image
             source={{ uri: placeholderUrl(150) }}

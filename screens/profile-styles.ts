@@ -49,6 +49,7 @@ const ProfileStyles = (theme) => StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.4,
     shadowRadius: 30,
+    elevation: 20,
   },
   profilePicture: {
     width: 150,
