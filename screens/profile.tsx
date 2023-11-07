@@ -9,7 +9,7 @@ import {
   Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getAuth, updateProfile, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
+import { getAuth, updateProfile, reauthenticateWithCredential, EmailAuthProvider, signOut } from "firebase/auth";
 import { lightTheme, darkTheme } from "../themes";
 import ProfileStyles from "./profile-styles";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -55,16 +55,23 @@ const Profile: React.FC<ProfileProps> = ({ navigation }) => {
     console.log("Editing profile");
   };
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     const auth = getAuth();
-    try {
-      await auth.signOut();
-      console.log("logout successful");
-    } catch (error) {
-      console.log("logout error: ", error);
-    
-    }
-  };
+  Alert.alert(
+    "Logout",
+    "Are you sure you want to logout?",
+    [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel"
+      },
+      { text: "Yes", onPress: async () => {
+        await auth.signOut();
+      }}
+    ]
+  );
+};
 
   const handleCancel = () => {
     setIsEditable(false);
