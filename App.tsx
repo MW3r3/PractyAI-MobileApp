@@ -16,7 +16,7 @@ import { NavigationProp } from "@react-navigation/native";
 // TODO: ADD chat Screen
 // TODO: ADD buy Screen
 // TODO: Replace placeholder images with actual images
-// TODO: add logout confirmation
+// TODO: Make database connections seperate from components
 
 
 export type RootParamList = {

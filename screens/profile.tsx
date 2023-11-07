@@ -16,10 +16,12 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { placeholderUrl } from "../components/utils/placeholder";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootParamList } from "../App";
-import { set, ref } from "firebase/database";
-import { db } from "../firebase";
 import UsageInfo from "../components/usage";
 import { ScrollView } from "react-native-gesture-handler";
+import { fetchUserData } from "../components/utils/fetchUserData";
+import { setUserData } from "../components/utils/setUserData";
+import { set } from "firebase/database";
+
 
 type ProfileProps = {
   navigation: StackNavigationProp<RootParamList, "Profile">;
@@ -29,11 +31,8 @@ const Profile: React.FC<ProfileProps> = ({ navigation }) => {
   const colorScheme = Appearance.getColorScheme();
   const theme = colorScheme === "light" ? darkTheme : lightTheme;
   const styles = ProfileStyles(theme);
-
   const [isEditable, setIsEditable] = useState(false);
-  
   const [user, setUser] = useState(null);
-  const [email, setEmail] = useState(user?.email || "");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState(user?.displayName || "");
 
@@ -83,10 +82,8 @@ const Profile: React.FC<ProfileProps> = ({ navigation }) => {
       const credential = EmailAuthProvider.credential(user.email, password);
       try {
         await reauthenticateWithCredential(user, credential);
-        await updateProfile(user, {
-          displayName: username,
-        });
-        await set(ref(db, `users/${user.uid}/username`), username);
+        await setUserData("username", username);
+        await updateProfile(user, { displayName: username });
         setIsEditable(false);
       } catch (error) {
         console.log("Error re-authenticating:", error);
@@ -124,7 +121,6 @@ const Profile: React.FC<ProfileProps> = ({ navigation }) => {
             <TextInput
               style={styles.input}
               value={user?.email}
-              onChangeText={setEmail}
               editable={false}
               keyboardType="email-address"
               autoCapitalize="none"
