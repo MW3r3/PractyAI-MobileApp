@@ -1,5 +1,5 @@
 
-# PractyAI_ReactNative_Deprecated
+# PractyAI-MobileApp
 
 PractyAI began as an enterprising startup aimed at revolutionizing language learning through the application of Large Language Models (LLMs). Our core initiative was to build a dynamic and intelligent chatbot capable of assisting language learners by offering advanced features like spell checking, flexible personas, and conversational engagement.
 
